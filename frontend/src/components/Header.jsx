@@ -1,22 +1,29 @@
 import React from 'react'
 import { Navbar,Nav,Container} from 'react-bootstrap'
 import {FaSignInAlt,FaSignOutAlt} from 'react-icons/fa'
+import {LinkContainer} from 'react-router-bootstrap'
 
 function Header() {
   return (
    <header>
     <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
-            <Navbar.Brand href='/'>Mern App</Navbar.Brand>
+            <LinkContainer to='/'>
+            <Navbar.Brand >Mern App</Navbar.Brand>
+            </LinkContainer>
             <Navbar.Toggle aria-controls='basic-navbar-nav'/>
             <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='ms-auto'>
-                    <Nav.Link href='/login'>
+                    <LinkContainer to='/login'>
+                    <Nav.Link >
                         <FaSignInAlt/> Sign In
                     </Nav.Link>
-                    <Nav.Link href='/login'>
+                    </LinkContainer>
+                    <LinkContainer to='/signup'>
+                    <Nav.Link >
                         <FaSignOutAlt/> Sign Up
                     </Nav.Link>
+                    </LinkContainer>
                 </Nav>
             </Navbar.Collapse>
         </Container>
