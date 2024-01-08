@@ -6,6 +6,7 @@ import FormContainer from '../components/FormContainer';
 import { useLoginMutation } from '../Slices/usersApiSlice';//to connect  with backend
 import {setCredentials} from '../Slices/authSlice'//to connect  with backend
 import { toast } from 'react-toastify';
+import Loader from '../components/Loader';
 
 const LoginScreen = () => {
 
@@ -28,7 +29,7 @@ const LoginScreen = () => {
     const submitHandler = async (e)=>{
         e.preventDefault();
         try {
-           const res = await login({email,password}).unwrap() ;
+           const res = await login({email,password}).unwrap() ;//this login is called from userApiSlice
            dispatch(setCredentials({...res}))
            navigate('/')
         } catch (err) {
@@ -56,6 +57,8 @@ const LoginScreen = () => {
 
                 </Form.Control>
             </Form.Group>
+
+            {isLoading && <Loader/>}
 
             <Button type='submit' variant='primary' className='mt-3'>Sign In</Button>
 
