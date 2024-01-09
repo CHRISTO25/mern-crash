@@ -1,7 +1,12 @@
-import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState,useEffect } from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+import {useDispatch,useSelector} from 'react-redux'// to connect with backend
 import { Form,Button,Row,Col } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
+import { toast } from 'react-toastify';
+import Loader from '../components/Loader';
+import { useSignupMutation } from '../Slices/usersApiSlice';
+import {setCredentials} from '../Slices/authSlice'//to connect  with backend
 
 const RegisterScreen = () => {
 
@@ -10,9 +15,32 @@ const RegisterScreen = () => {
     const [password,setPassword] = useState('')
     const [confirmPassword,setConfirmPassword] = useState('')
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const {userInfo} = useSelector((state)=>state.auth)
+
+    const [signup,{isLoading}] =useSignupMutation()//this login is called from userApiSlice
+
+    useEffect(()=>{
+        if(userInfo){
+            navigate('/')
+        }
+    },[navigate,userInfo])
+
     const submitHandler = async (e)=>{
         e.preventDefault();
-        console.log('submit');
+       if (password !== confirmPassword) {
+          toast.error('Password do not match')
+       }else{
+        try {
+            const res = await signup({name,email,password}).unwrap() ;//this login is called from userApiSlice
+            dispatch(setCredentials({...res}))
+            navigate('/')
+        } catch (err) {
+            toast.error(err?.data?.message || err.error);
+        }
+       }
     }
 
   return (
@@ -51,6 +79,8 @@ const RegisterScreen = () => {
 
                 </Form.Control>
             </Form.Group>
+               
+               {isLoading && <Loader/>}
 
             <Button type='submit' variant='primary' className='mt-3'>Sign Up</Button>
 
