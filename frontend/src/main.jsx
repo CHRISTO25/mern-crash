@@ -12,10 +12,13 @@ import App from './App.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import PrivateRoute from './components/PrivateRoute.jsx'
+import ProtectAdmin from './components/ProtectAdmin.jsx'
 import HomeScreen from './screens/HomeScreen.jsx'
 import LoginScreen from './screens/LoginScreen.jsx'
 import RegisterScreen from './screens/RegisterScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
+import AdminLoginScreen from './screens/AdminScreens/AdminLoginScreen.jsx'
+import DashScreen from './screens/AdminScreens/DashScreen.jsx'
 
 
 
@@ -28,7 +31,12 @@ const router = createBrowserRouter(
        <Route  path='' element={<PrivateRoute/>}> // private route
        <Route  path='/profile' element={<ProfileScreen/>}/>
        </Route>
-      
+       <Route  path='/admin' element={<AdminLoginScreen/>}/>
+       <Route  path='' element={<ProtectAdmin/>}>
+       <Route  path='/dashboard' element={<DashScreen/>}/>
+       </Route>
+
+       
     </Route>
   )
 )
