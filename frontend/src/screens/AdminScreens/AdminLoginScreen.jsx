@@ -4,7 +4,7 @@ import { Form,Button,Row,Col } from 'react-bootstrap';
 import {useDispatch,useSelector} from 'react-redux'// to connect with backend
 import FormContainer from '../../components/FormContainer';
 import { useLoginMutation } from '../../Slices/AdminSlice/adminsApiSlice'//to connect  with backend
-import {setCredentials} from '../../Slices/authSlice'//to connect  with backend
+import {setCredentials} from '../../Slices/AdminSlice/authSlice'//to connect  with backend
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
 
@@ -22,7 +22,7 @@ const AdminLoginScreen = () => {
 
     useEffect(()=>{
         if(adminInfo){
-            navigate('/dashboard')
+            navigate('/admin/dashboard')
         }
     },[navigate,adminInfo])
 
@@ -31,7 +31,7 @@ const AdminLoginScreen = () => {
         try {
            const res = await login({email,password}).unwrap() ;//this login is called from userApiSlice
            dispatch(setCredentials({...res}))
-           navigate('/dashboard')
+           navigate('/admin/dashboard')
         } catch (err) {
             toast.error(err?.data?.message || err.error);
         }

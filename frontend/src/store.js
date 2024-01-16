@@ -4,13 +4,13 @@ import { apiSlice } from './Slices/apiSlice';
 import adminReducer from './Slices/AdminSlice/authSlice';
 import {adminApiSlice} from './Slices/AdminSlice/apiSlice' 
 
-console.log(adminReducer);
+
 
 const store = configureStore({
     reducer:{
        auth:authReducer,
        adminAuth:adminReducer,
-    //    [adminApiSlice.reducerPath] : adminApiSlice.reducer,
+       [adminApiSlice.reducerPath] : adminApiSlice.reducer,
        [apiSlice.reducerPath] : apiSlice.reducer
     },
     middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(apiSlice.middleware),

@@ -11,7 +11,9 @@ const authAdmin = asyncHandler(async (req, res) => {
     const user = await User.findOne({email})  
     if(user && (await user.matchPassword(password))){
         if (user.is_admin == "true") {
+            const users = await User.find()
         generateAdminToken(res,user._id)
+          
         res.status(201).json({
             _id:user._id,
             name:user.name,
@@ -28,7 +30,46 @@ const authAdmin = asyncHandler(async (req, res) => {
         throw new Error('Invalid email or password')
      }
 
+})
 
+// @desc   Users data
+// route   GET/api/admin/usersData
+// @access Private
+const sendUsersData = asyncHandler(async (req, res) => {
+    const users = await User.find()
+
+    if (users) {
+        res.status(200).json({users})
+    } else {
+        throw new Error('no users found')
+    }
+    
+})
+
+// @desc   Change Is Admin
+// route   POST/api/admin/usersData
+// @access Private
+const changeIsAdmin = asyncHandler(async (req, res) => {
+
+  const  {id} = req.body
+
+    const users = await User.findOne({_id:id})
+   
+   console.log("==============================",users);
+    if (users) {
+        if (users.is_admin=='false') {
+            
+            const Update = await User.findByIdAndUpdate(id,{is_admin:"true"})
+        res.status(200).json({Update})
+        } else {
+            const Update = await User.findByIdAndUpdate(id,{is_admin:"false"})
+        res.status(200).json({Update})
+        }
+        
+    } else {
+        throw new Error('no users found')
+    }
+    
 })
 
 
@@ -49,5 +90,7 @@ const logoutAdmin = asyncHandler(async (req, res) => {
 
 export {
    authAdmin,
-   logoutAdmin
+   logoutAdmin,
+   sendUsersData,
+   changeIsAdmin
 };

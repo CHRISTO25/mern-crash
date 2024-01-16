@@ -33,7 +33,7 @@ const router = createBrowserRouter(
        </Route>
        <Route  path='/admin' element={<AdminLoginScreen/>}/>
        <Route  path='' element={<ProtectAdmin/>}>
-       <Route  path='/dashboard' element={<DashScreen/>}/>
+       <Route  path='/admin/dashboard' element={<DashScreen/>}/>
        </Route>
 
        

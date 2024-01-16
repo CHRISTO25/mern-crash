@@ -21,8 +21,16 @@ export const apiSlice = adminApiSlice.injectEndpoints({
                 method: 'POST'
             })
         }),
+        // change is admin
+        isAdminChange:builder.mutation({
+            query:(data)=>({
+                url:`${ADMIN_URL}/changeIsAdmin`,
+                method:'POST',
+                body:data
+            })
+        })
 
     })
 })
 
-export const { useLoginMutation,useAdminLogoutMutation } = apiSlice;
+export const { useLoginMutation,useAdminLogoutMutation ,useIsAdminChangeMutation} = apiSlice;

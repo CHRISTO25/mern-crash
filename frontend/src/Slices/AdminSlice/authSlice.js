@@ -13,7 +13,8 @@ const authSlice = createSlice({
             localStorage.setItem('adminInfo',JSON.stringify(action.payload)) 
         },
         logout:(state,action)=>{  //to clear the frontend localstorage
-            state.adminInfo = null;
+            
+             state.adminInfo = null;
             localStorage.removeItem('adminInfo');
         }
     }

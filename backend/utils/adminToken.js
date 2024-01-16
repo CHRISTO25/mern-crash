@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
 
 const generateAdminToken = (res,userId) =>{
-    const token = jwt.sign({userId},process.env.JWT_ADMIN_SECRET,{
+    const adminToken = jwt.sign({userId},process.env.JWT_ADMIN_SECRET,{
         expiresIn:'30d'
     })
 
-    res.cookie('jwt',token,{
+    res.cookie('jwt',adminToken,{
         httpOnly:true,
         secure:process.env.NODE_ENV != 'development',
         sameSite:'strict',
